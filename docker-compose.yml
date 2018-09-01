@@ -3,6 +3,8 @@ version: "2"
 services:
   db:
     image: postgres
+    ports:
+    - "5432:5432"
   nats:
     image: nats
     ports:
@@ -137,7 +139,7 @@ services:
 
 
   sotah-api-base:
-    build: ./sotah-api
+    image: ihsw/sotah-server
     ports:
     - "8080:8080"
     environment:
@@ -151,7 +153,6 @@ services:
     - nats
     - db
     volumes:
-    - ./sotah-api/app:/srv/app
     - ./sotah-server/data/item-icons:/tmp/item-icons
   sotah-api-test:
     extends: sotah-api-base
@@ -165,6 +166,7 @@ services:
     - sotah-server-api-production
     - nats
     - db
+    command: ./bin/run-app-prod
 
 
   sotah-client-production:
