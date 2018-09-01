@@ -145,7 +145,6 @@ services:
   sotah-api:
     extends: sotah-api-base
     depends_on:
-    - sotah-server-api
     - nats
     - db
     volumes:
@@ -153,13 +152,11 @@ services:
   sotah-api-test:
     extends: sotah-api-base
     depends_on:
-    - sotah-server-api-test
     - nats
     - db
   sotah-api-production:
     extends: sotah-api-base
     depends_on:
-    - sotah-server-api-production
     - nats
     - db
     command: ./bin/run-app-prod
@@ -169,5 +166,3 @@ services:
     image: ihsw/sotah-client
     ports:
     - "5000:5000"
-    depends_on:
-    - sotah-api-production
