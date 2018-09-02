@@ -161,7 +161,7 @@ services:
     depends_on:
     - nats
     - db
-    command: ./bin/run-app-prod
+    command: ["./bin/run-app-prod"]
 
 
   sotah-client-production:
