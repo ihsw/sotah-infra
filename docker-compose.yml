@@ -32,6 +32,10 @@ services:
     privileged: true
     environment:
     - HOST_PROC=/hostfs/proc
+    - INFLUX_HOST=influxdb
+    - NATS_HOST=nats
+    - PG_HOST=db
+    - NGINX_HOST=reverse-proxy
   chronograf:
     image: chronograf:1.6
     depends_on:
