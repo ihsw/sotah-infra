@@ -54,6 +54,37 @@ services:
     - TOKEN_SECRET=$TOKEN_SECRET
 
 
+  elasticsearch:
+    image: docker.elastic.co/elasticsearch/elasticsearch:6.4.0
+    ports:
+    - "9200:9200"
+    - "9300:9300"
+    environment:
+    - discovery.type=single-node
+    - "ES_JAVA_OPTS=-Xms512m -Xmx512m"
+    volumes:
+    - ./elasticsearch/config/elasticsearch.yml:/usr/share/elasticsearch/config/elasticsearch.yml:ro
+    - ./elasticsearch/data:/usr/share/elasticsearch/data
+  logstash:
+    image: docker.elastic.co/logstash/logstash:6.4.0
+    ports:
+    - "8911:8911"
+    volumes:
+    - ./logstash/pipeline:/usr/share/logstash/pipeline:ro
+    - ./logstash/tmp:/tmp/logstash
+    depends_on:
+    - elasticsearch
+  kibana:
+    image: docker.elastic.co/kibana/kibana:6.4.0
+    ports:
+    - "5601:5601"
+    depends_on:
+    - elasticsearch
+    environment:
+    - SERVER_NAME=localhost
+    - XPACK_MONITORING_COLLECTION_ENABLED=true
+
+
   reverse-proxy:
     image: nginx
     ports:
