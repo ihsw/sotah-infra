@@ -109,37 +109,6 @@ services:
     environment:
     - API_KEY=$API_KEY
     - NATS_HOST=nats
-  
-  sotah-server-live-auctions:
-    extends: sotah-server-base
-    depends_on:
-    - nats
-    command: -c /tmp/sotah-server/config.json --cache-dir /tmp/sotah-server/data -v debug live-auctions
-  sotah-server-live-auctions-production:
-    extends: sotah-server-base
-    depends_on:
-    - nats
-    command: -c /tmp/sotah-server/config.json --cache-dir /tmp/sotah-server/data -v debug live-auctions
-    environment:
-    - GOOGLE_APPLICATION_CREDENTIALS=/tmp/gcloud-app-credentials.json
-    - PROJECT_ID=$PROJECT_ID
-    volumes:
-    - $GOOGLE_APPLICATION_CREDENTIALS:/tmp/gcloud-app-credentials.json
-  
-  sotah-server-pricelist-histories:
-    extends: sotah-server-base
-    depends_on:
-    - nats
-    command: -c /tmp/sotah-server/config.json --cache-dir /tmp/sotah-server/data -v debug pricelist-histories
-  sotah-server-pricelist-histories-production:
-    extends: sotah-server-base
-    command: -c /tmp/sotah-server/config.json --cache-dir /tmp/sotah-server/data -v debug pricelist-histories
-    environment:
-    - GOOGLE_APPLICATION_CREDENTIALS=/tmp/gcloud-app-credentials.json
-    - PROJECT_ID=$PROJECT_ID
-    - NATS_HOST=$NATS_HOST
-    volumes:
-    - $GOOGLE_APPLICATION_CREDENTIALS:/tmp/gcloud-app-credentials.json
 
   sotah-server-api:
     extends: sotah-server-base
@@ -155,10 +124,49 @@ services:
     extends: sotah-server-base
     depends_on:
     - nats
+    - logstash
     command: -c /tmp/sotah-server/config.json --cache-dir /tmp/sotah-server/data -v debug api
     environment:
     - GOOGLE_APPLICATION_CREDENTIALS=/tmp/gcloud-app-credentials.json
     - PROJECT_ID=$PROJECT_ID
+    - LOGSTASH_HOST=logstash
+    - LOGSTASH_PORT=8911
+    volumes:
+    - $GOOGLE_APPLICATION_CREDENTIALS:/tmp/gcloud-app-credentials.json
+  
+  sotah-server-live-auctions:
+    extends: sotah-server-base
+    depends_on:
+    - nats
+    command: -c /tmp/sotah-server/config.json --cache-dir /tmp/sotah-server/data -v debug live-auctions
+  sotah-server-live-auctions-production:
+    extends: sotah-server-base
+    depends_on:
+    - nats
+    - logstash
+    command: -c /tmp/sotah-server/config.json --cache-dir /tmp/sotah-server/data -v debug live-auctions
+    environment:
+    - GOOGLE_APPLICATION_CREDENTIALS=/tmp/gcloud-app-credentials.json
+    - PROJECT_ID=$PROJECT_ID
+    - LOGSTASH_HOST=logstash
+    - LOGSTASH_PORT=8911
+    volumes:
+    - $GOOGLE_APPLICATION_CREDENTIALS:/tmp/gcloud-app-credentials.json
+  
+  sotah-server-pricelist-histories:
+    extends: sotah-server-base
+    depends_on:
+    - nats
+    command: -c /tmp/sotah-server/config.json --cache-dir /tmp/sotah-server/data -v debug pricelist-histories
+  sotah-server-pricelist-histories-production:
+    extends: sotah-server-base
+    command: -c /tmp/sotah-server/config.json --cache-dir /tmp/sotah-server/data -v debug pricelist-histories
+    environment:
+    - GOOGLE_APPLICATION_CREDENTIALS=/tmp/gcloud-app-credentials.json
+    - PROJECT_ID=$PROJECT_ID
+    - NATS_HOST=$NATS_HOST
+    - LOGSTASH_HOST=logstash
+    - LOGSTASH_PORT=8911
     volumes:
     - $GOOGLE_APPLICATION_CREDENTIALS:/tmp/gcloud-app-credentials.json
 
