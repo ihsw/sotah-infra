@@ -165,7 +165,7 @@ services:
     - GOOGLE_APPLICATION_CREDENTIALS=/tmp/gcloud-app-credentials.json
     - PROJECT_ID=$PROJECT_ID
     - NATS_HOST=$NATS_HOST
-    - LOGSTASH_HOST=logstash
+    - LOGSTASH_HOST=$LOGSTASH_HOST
     - LOGSTASH_PORT=8911
     volumes:
     - $GOOGLE_APPLICATION_CREDENTIALS:/tmp/gcloud-app-credentials.json
