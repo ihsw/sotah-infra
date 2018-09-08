@@ -62,6 +62,7 @@ services:
     environment:
     - discovery.type=single-node
     - "ES_JAVA_OPTS=-Xms512m -Xmx512m"
+    - TAKE_FILE_OWNERSHIP=1
     volumes:
     - ./elasticsearch/config/elasticsearch.yml:/usr/share/elasticsearch/config/elasticsearch.yml:ro
     - ./elasticsearch/data:/usr/share/elasticsearch/data
