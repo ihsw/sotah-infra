@@ -109,6 +109,8 @@ services:
     environment:
     - API_KEY=$API_KEY
     - NATS_HOST=nats
+    - LOGSTASH_HOST=logstash
+    - LOGSTASH_PORT=8911
   
   sotah-server-live-auctions:
     extends: sotah-server-base
@@ -146,6 +148,7 @@ services:
     extends: sotah-server-base
     depends_on:
     - nats
+    - logstash
     command: -c /tmp/sotah-server/config.json --cache-dir /tmp/sotah-server/data -v debug api
   sotah-server-api-test:
     extends: sotah-server-base
