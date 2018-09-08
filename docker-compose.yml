@@ -71,7 +71,6 @@ services:
     - "8911:8911"
     volumes:
     - ./logstash/pipeline:/usr/share/logstash/pipeline:ro
-    - ./logstash/tmp:/tmp/logstash
     depends_on:
     - elasticsearch
   kibana:
@@ -116,11 +115,13 @@ services:
     extends: sotah-server-base
     depends_on:
     - nats
+    - logstash
     command: -c /tmp/sotah-server/config.json --cache-dir /tmp/sotah-server/data -v debug live-auctions
   sotah-server-live-auctions-production:
     extends: sotah-server-base
     depends_on:
     - nats
+    - logstash
     command: -c /tmp/sotah-server/config.json --cache-dir /tmp/sotah-server/data -v debug live-auctions
     environment:
     - GOOGLE_APPLICATION_CREDENTIALS=/tmp/gcloud-app-credentials.json
@@ -132,11 +133,13 @@ services:
     extends: sotah-server-base
     depends_on:
     - nats
+    - logstash
     command: -c /tmp/sotah-server/config.json --cache-dir /tmp/sotah-server/data -v debug pricelist-histories
   sotah-server-pricelist-histories-production:
     extends: sotah-server-base
     depends_on:
     - nats
+    - logstash
     command: -c /tmp/sotah-server/config.json --cache-dir /tmp/sotah-server/data -v debug pricelist-histories
     environment:
     - GOOGLE_APPLICATION_CREDENTIALS=/tmp/gcloud-app-credentials.json
@@ -154,11 +157,13 @@ services:
     extends: sotah-server-base
     depends_on:
     - nats
+    - logstash
     command: -c /tmp/sotah-server/config.json --cache-dir /tmp/sotah-server/data -v debug api-test -d /tmp/sotah-server/test-fixtures
   sotah-server-api-production:
     extends: sotah-server-base
     depends_on:
     - nats
+    - logstash
     command: -c /tmp/sotah-server/config.json --cache-dir /tmp/sotah-server/data -v debug api
     environment:
     - GOOGLE_APPLICATION_CREDENTIALS=/tmp/gcloud-app-credentials.json
@@ -168,6 +173,8 @@ services:
 
   sotah-server-sync-items:
     extends: sotah-server-base
+    depends_on:
+    - logstash
     environment:
     - GOOGLE_APPLICATION_CREDENTIALS=/tmp/gcloud-app-credentials.json
     - PROJECT_ID=$PROJECT_ID
