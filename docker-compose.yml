@@ -65,6 +65,8 @@ services:
     - ELASTICSEARCH_URL=http://$ELASTICSEARCH_HOST:9200
   oauth2-proxy:
     build: ./oauth2-proxy
+    depends_on:
+    - kibana
     ports:
     - "4180:4180"
     environment:
@@ -72,7 +74,7 @@ services:
     - OAUTH2_PROXY_CLIENT_SECRET=$KIBANA_GOOGLE_CLIENT_SECRET
     - OAUTH2_PROXY_COOKIE_SECRET=$KIBANA_COOKIE_SECRET
     - GOOGLE_DOMAINS=$GOOGLE_DOMAINS
-    - KIBANA_HOST=$KIBANA_HOST
+    - KIBANA_HOST=kibana
 
 
   reverse-proxy:
@@ -90,6 +92,7 @@ services:
     - sotah-client-production
     - sotah-api-production
     - chronograf
+    - oauth2-proxy
 
 
   sotah-server-base:
