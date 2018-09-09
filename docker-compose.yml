@@ -20,38 +20,20 @@ services:
     - "8086:8086"
     volumes:
     - ./influxdb:/var/lib/influxdb
-  telegraf:
-    image: telegraf:1.7
-    depends_on:
-    - influxdb
-    - nats
-    - db
-    - reverse-proxy
-    volumes:
-    - ./telegraf/telegraf.conf:/etc/telegraf/telegraf.conf:ro
-    - /:/hostfs:ro
-    privileged: true
-    environment:
-    - HOST_PROC=/hostfs/proc
-    - INFLUX_HOST=influxdb
-    - NATS_HOST=nats
-    - PG_HOST=db
-    - NGINX_HOST=reverse-proxy
   chronograf:
     image: chronograf:1.6
-    depends_on:
-    - influxdb
     ports:
     - "8888:8888"
     volumes:
     - ./chronograf:/var/lib/chronograf
-    command: --influxdb-url=http://influxdb:8086
+    command: --influxdb-url=http://$INFLUX_HOST:8086
     environment:
     - GOOGLE_CLIENT_ID=$GOOGLE_CLIENT_ID
     - GOOGLE_CLIENT_SECRET=$GOOGLE_CLIENT_SECRET
     - GOOGLE_DOMAINS=$GOOGLE_DOMAINS
     - PUBLIC_URL=$PUBLIC_URL
     - TOKEN_SECRET=$TOKEN_SECRET
+    - INFLUX_HOST=$INFLUX_HOST
 
 
   elasticsearch:
@@ -83,6 +65,14 @@ services:
     environment:
     - SERVER_NAME=localhost
     - XPACK_MONITORING_COLLECTION_ENABLED=true
+  oauth2-proxy:
+    build: ./oauth2-proxy
+    ports:
+    - "9999:9999"
+    environment:
+    - OAUTH2_PROXY_CLIENT_ID=$KIBANA_GOOGLE_CLIENT_ID
+    - OAUTH2_PROXY_CLIENT_SECRET=$KIBANA_GOOGLE_CLIENT_SECRET
+    - OAUTH2_PROXY_COOKIE_SECRET=$KIBANA_COOKIE_SECRET
 
 
   reverse-proxy:
@@ -124,13 +114,12 @@ services:
     extends: sotah-server-base
     depends_on:
     - nats
-    - logstash
     command: -c /tmp/sotah-server/config.json --cache-dir /tmp/sotah-server/data -v debug api
     environment:
     - GOOGLE_APPLICATION_CREDENTIALS=/tmp/gcloud-app-credentials.json
     - PROJECT_ID=$PROJECT_ID
-    - LOGSTASH_HOST=logstash
-    - LOGSTASH_PORT=8911
+    - LOGSTASH_HOST=$LOGSTASH_HOST
+    - LOGSTASH_PORT=$LOGSTASH_PORT
     volumes:
     - $GOOGLE_APPLICATION_CREDENTIALS:/tmp/gcloud-app-credentials.json
   
@@ -143,13 +132,12 @@ services:
     extends: sotah-server-base
     depends_on:
     - nats
-    - logstash
     command: -c /tmp/sotah-server/config.json --cache-dir /tmp/sotah-server/data -v debug live-auctions
     environment:
     - GOOGLE_APPLICATION_CREDENTIALS=/tmp/gcloud-app-credentials.json
     - PROJECT_ID=$PROJECT_ID
-    - LOGSTASH_HOST=logstash
-    - LOGSTASH_PORT=8911
+    - LOGSTASH_HOST=$LOGSTASH_HOST
+    - LOGSTASH_PORT=$LOGSTASH_PORT
     volumes:
     - $GOOGLE_APPLICATION_CREDENTIALS:/tmp/gcloud-app-credentials.json
   
@@ -166,7 +154,7 @@ services:
     - PROJECT_ID=$PROJECT_ID
     - NATS_HOST=$NATS_HOST
     - LOGSTASH_HOST=$LOGSTASH_HOST
-    - LOGSTASH_PORT=8911
+    - LOGSTASH_PORT=$LOGSTASH_PORT
     volumes:
     - $GOOGLE_APPLICATION_CREDENTIALS:/tmp/gcloud-app-credentials.json
 
