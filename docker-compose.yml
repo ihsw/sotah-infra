@@ -67,11 +67,12 @@ services:
   oauth2-proxy:
     build: ./oauth2-proxy
     ports:
-    - "9999:9999"
+    - "4180:4180"
     environment:
     - OAUTH2_PROXY_CLIENT_ID=$KIBANA_GOOGLE_CLIENT_ID
     - OAUTH2_PROXY_CLIENT_SECRET=$KIBANA_GOOGLE_CLIENT_SECRET
     - OAUTH2_PROXY_COOKIE_SECRET=$KIBANA_COOKIE_SECRET
+    - KIBANA_HOST=localhost
 
 
   reverse-proxy:
