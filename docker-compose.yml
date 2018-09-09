@@ -26,14 +26,13 @@ services:
     - "8888:8888"
     volumes:
     - ./chronograf:/var/lib/chronograf
-    command: --influxdb-url=http://$INFLUX_HOST:8086
+    command: --influxdb-url=http://influxdb:8086
     environment:
     - GOOGLE_CLIENT_ID=$GOOGLE_CLIENT_ID
     - GOOGLE_CLIENT_SECRET=$GOOGLE_CLIENT_SECRET
     - GOOGLE_DOMAINS=$GOOGLE_DOMAINS
     - PUBLIC_URL=$PUBLIC_URL
     - TOKEN_SECRET=$TOKEN_SECRET
-    - INFLUX_HOST=$INFLUX_HOST
 
 
   elasticsearch:
