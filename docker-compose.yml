@@ -59,11 +59,10 @@ services:
     image: docker.elastic.co/kibana/kibana:6.4.0
     ports:
     - "5601:5601"
-    depends_on:
-    - elasticsearch
     environment:
     - SERVER_NAME=localhost
     - XPACK_MONITORING_COLLECTION_ENABLED=true
+    - ELASTICSEARCH_URL=http://$ELASTICSEARCH_HOST:9200
   oauth2-proxy:
     build: ./oauth2-proxy
     ports:
