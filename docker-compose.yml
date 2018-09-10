@@ -170,6 +170,15 @@ services:
     - $GOOGLE_APPLICATION_CREDENTIALS:/tmp/gcloud-app-credentials.json
     command: -c /tmp/sotah-server/config.json --cache-dir /tmp/sotah-server/data -v debug sync-items
 
+  sotah-server-prune-store:
+    extends: sotah-server-base
+    environment:
+    - GOOGLE_APPLICATION_CREDENTIALS=/tmp/gcloud-app-credentials.json
+    - PROJECT_ID=$PROJECT_ID
+    volumes:
+    - $GOOGLE_APPLICATION_CREDENTIALS:/tmp/gcloud-app-credentials.json
+    command: -c /tmp/sotah-server/config.json --cache-dir /tmp/sotah-server/data -v debug prune-store
+
 
   sotah-api-base:
     image: ihsw/sotah-api
