@@ -6,4 +6,4 @@
     -email-domain=$GOOGLE_DOMAINS \
     -redirect-url=https://kibana.sotah.info/oauth2/callback \
     -cookie-secret=$OAUTH2_PROXY_COOKIE_SECRET \
-    -cookie-secure=false
+    -cookie-domain=kibana.sotah.info
