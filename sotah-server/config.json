@@ -49,5 +49,6 @@
         { "name": "jewelcrafting", "label": "Jewelcrafting", "icon": "inv_misc_gem_01" },
         { "name": "leatherworking", "label": "Leatherworking", "icon": "trade_leatherworking" },
         { "name": "tailoring", "label": "Tailoring", "icon": "trade_tailoring" }
-    ]
+    ],
+    "item_blacklist": [22459, 22460]
 }
