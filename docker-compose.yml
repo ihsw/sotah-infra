@@ -183,7 +183,7 @@ services:
     extends: sotah-server-base
     depends_on:
     - nats
-    command: -c /tmp/sotah-server/config.json --cache-dir /tmp/sotah-server/data -v debug reform-history
+    command: -c /tmp/sotah-server/config.json --cache-dir /tmp/sotah-server/data -v info reform-history
 
 
   sotah-api-base:
