@@ -179,6 +179,12 @@ services:
     - $GOOGLE_APPLICATION_CREDENTIALS:/tmp/gcloud-app-credentials.json
     command: -c /tmp/sotah-server/config.json --cache-dir /tmp/sotah-server/data -v debug prune-store
 
+  sotah-server-reform-history:
+    extends: sotah-server-base
+    depends_on:
+    - nats
+    command: -c /tmp/sotah-server/config.json --cache-dir /tmp/sotah-server/data -v debug reform-history
+
 
   sotah-api-base:
     image: ihsw/sotah-api
