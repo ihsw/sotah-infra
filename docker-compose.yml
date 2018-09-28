@@ -102,6 +102,14 @@ services:
     environment:
     - API_KEY=$API_KEY
     - NATS_HOST=nats
+  sotah-server-base-production:
+    extends: sotah-server-base
+    image: gcr.io/$PROJECT_ID/server
+    environment:
+    - GOOGLE_APPLICATION_CREDENTIALS=/tmp/gcloud-app-credentials.json
+    - PROJECT_ID=$PROJECT_ID
+    - LOGSTASH_HOST=$LOGSTASH_HOST
+    - LOGSTASH_PORT=$LOGSTASH_PORT
 
   sotah-server-api:
     extends: sotah-server-base
@@ -114,15 +122,10 @@ services:
     - nats
     command: -c /tmp/sotah-server/config.json --cache-dir /tmp/sotah-server/data -v debug api-test -d /tmp/sotah-server/test-fixtures
   sotah-server-api-production:
-    extends: sotah-server-base
+    extends: sotah-server-base-production
     depends_on:
     - nats
     command: -c /tmp/sotah-server/config.json --cache-dir /tmp/sotah-server/data -v debug api
-    environment:
-    - GOOGLE_APPLICATION_CREDENTIALS=/tmp/gcloud-app-credentials.json
-    - PROJECT_ID=$PROJECT_ID
-    - LOGSTASH_HOST=$LOGSTASH_HOST
-    - LOGSTASH_PORT=$LOGSTASH_PORT
     volumes:
     - $GOOGLE_APPLICATION_CREDENTIALS:/tmp/gcloud-app-credentials.json
   
@@ -132,15 +135,10 @@ services:
     - nats
     command: -c /tmp/sotah-server/config.json --cache-dir /tmp/sotah-server/data -v debug live-auctions
   sotah-server-live-auctions-production:
-    extends: sotah-server-base
+    extends: sotah-server-base-production
     depends_on:
     - nats
     command: -c /tmp/sotah-server/config.json --cache-dir /tmp/sotah-server/data -v debug live-auctions
-    environment:
-    - GOOGLE_APPLICATION_CREDENTIALS=/tmp/gcloud-app-credentials.json
-    - PROJECT_ID=$PROJECT_ID
-    - LOGSTASH_HOST=$LOGSTASH_HOST
-    - LOGSTASH_PORT=$LOGSTASH_PORT
     volumes:
     - $GOOGLE_APPLICATION_CREDENTIALS:/tmp/gcloud-app-credentials.json
   
@@ -150,37 +148,25 @@ services:
     - nats
     command: -c /tmp/sotah-server/config.json --cache-dir /tmp/sotah-server/data -v debug pricelist-histories
   sotah-server-pricelist-histories-production:
-    extends: sotah-server-base
+    extends: sotah-server-base-production
     command: -c /tmp/sotah-server/config.json --cache-dir /tmp/sotah-server/data -v debug pricelist-histories
-    environment:
-    - GOOGLE_APPLICATION_CREDENTIALS=/tmp/gcloud-app-credentials.json
-    - PROJECT_ID=$PROJECT_ID
-    - NATS_HOST=$NATS_HOST
-    - LOGSTASH_HOST=$LOGSTASH_HOST
-    - LOGSTASH_PORT=$LOGSTASH_PORT
     volumes:
     - $GOOGLE_APPLICATION_CREDENTIALS:/tmp/gcloud-app-credentials.json
 
-  sotah-server-sync-items:
-    extends: sotah-server-base
-    environment:
-    - GOOGLE_APPLICATION_CREDENTIALS=/tmp/gcloud-app-credentials.json
-    - PROJECT_ID=$PROJECT_ID
+  sotah-server-sync-items-production:
+    extends: sotah-server-base-production
     volumes:
     - $GOOGLE_APPLICATION_CREDENTIALS:/tmp/gcloud-app-credentials.json
     command: -c /tmp/sotah-server/config.json --cache-dir /tmp/sotah-server/data -v debug sync-items
 
-  sotah-server-prune-store:
-    extends: sotah-server-base
-    environment:
-    - GOOGLE_APPLICATION_CREDENTIALS=/tmp/gcloud-app-credentials.json
-    - PROJECT_ID=$PROJECT_ID
+  sotah-server-prune-store-production:
+    extends: sotah-server-base-production
     volumes:
     - $GOOGLE_APPLICATION_CREDENTIALS:/tmp/gcloud-app-credentials.json
     command: -c /tmp/sotah-server/config.json --cache-dir /tmp/sotah-server/data -v debug prune-store
 
-  sotah-server-reform-history:
-    extends: sotah-server-base
+  sotah-server-reform-history-production:
+    extends: sotah-server-base-production
     depends_on:
     - nats
     command: -c /tmp/sotah-server/config.json --cache-dir /tmp/sotah-server/data -v debug reform-history
@@ -208,12 +194,13 @@ services:
     - db
   sotah-api-production:
     extends: sotah-api-base
+    image: gcr.io/$PROJECT_ID/api
     depends_on:
     - nats
     - db
 
 
   sotah-client-production:
-    image: ihsw/sotah-client
+    image: gcr.io/$PROJECT_ID/client
     ports:
     - "5000:5000"
