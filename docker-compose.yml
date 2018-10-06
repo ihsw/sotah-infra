@@ -1,5 +1,8 @@
 version: "2"
 
+volumes:
+  db-volume:
+
 services:
   db:
     image: postgres
@@ -7,6 +10,12 @@ services:
     - "5432:5432"
     volumes:
     - ./db/data:/var/lib/postgresql/data
+  db-dev:
+    image: postgres
+    ports:
+    - "5432:5432"
+    volumes:
+    - db-volume:/var/lib/postgresql/data
   nats:
     image: nats
     ports:
