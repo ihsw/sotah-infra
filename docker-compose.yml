@@ -109,7 +109,8 @@ services:
     volumes:
     - ./sotah-server:/tmp/sotah-server
     environment:
-    - API_KEY=$API_KEY
+    - CLIENT_ID=$CLIENT_ID
+    - CLIENT_SECRET=$CLIENT_SECRET
     - NATS_HOST=nats
   sotah-server-base-production:
     extends: sotah-server-base

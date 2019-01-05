@@ -1,5 +1,6 @@
 {
-    "api_key": "xxx",
+    "client_id": "xxx",
+    "client_secret": "xxx",
     "regions": [
         {
             "name": "us",
