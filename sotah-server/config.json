@@ -51,5 +51,5 @@
         { "name": "leatherworking", "label": "Leatherworking", "icon": "trade_leatherworking" },
         { "name": "tailoring", "label": "Tailoring", "icon": "trade_tailoring" }
     ],
-    "item_blacklist": []
+    "item_blacklist": [2460, 24507]
 }
