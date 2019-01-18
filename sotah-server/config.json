@@ -1,22 +1,23 @@
 {
-    "api_key": "xxx",
+    "client_id": "xxx",
+    "client_secret": "xxx",
     "regions": [
         {
             "name": "us",
-            "hostname": "us.api.battle.net",
+            "hostname": "us.api.blizzard.com",
             "primary": true
         },
         {
             "name": "eu",
-            "hostname": "eu.api.battle.net"
+            "hostname": "eu.api.blizzard.com"
         },
         {
             "name": "kr",
-            "hostname": "kr.api.battle.net"
+            "hostname": "kr.api.blizzard.com"
         },
         {
             "name": "tw",
-            "hostname": "tw.api.battle.net"
+            "hostname": "tw.api.blizzard.com"
         }
     ],
     "cache_dir": "",
@@ -57,5 +58,5 @@
         { "name": "leatherworking", "label": "Leatherworking", "icon": "trade_leatherworking" },
         { "name": "tailoring", "label": "Tailoring", "icon": "trade_tailoring" }
     ],
-    "item_blacklist": [22459, 22460, 132130, 20436, 24507]
+    "item_blacklist": [2460, 24507]
 }
