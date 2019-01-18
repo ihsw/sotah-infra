@@ -23,11 +23,18 @@
     "use_cache_dir": true,
     "whitelist": {
         "us": {
-            "aegwynn": true
+            "aegwynn": true,
+	    "earthen-ring": true
         },
-        "eu": {},
-        "kr": {},
-        "tw": {}
+        "eu": {
+            "aggramar": true
+        },
+        "kr": {
+            "alexstrasza": true
+        },
+        "tw": {
+            "arthas": true
+        }
     },
     "expansions": [
         { "name": "bfa", "label": "Battle for Azeroth", "label_color": "#CED9E0", "primary": true },
