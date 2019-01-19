@@ -23,69 +23,6 @@ services:
     - "8222:8222"
 
 
-  influxdb:
-    image: influxdb:1.6
-    ports:
-    - "8086:8086"
-    volumes:
-    - ./influxdb:/var/lib/influxdb
-  chronograf:
-    image: chronograf:1.6
-    ports:
-    - "8888:8888"
-    volumes:
-    - ./chronograf:/var/lib/chronograf
-    command: --influxdb-url=http://influxdb:8086
-    environment:
-    - GOOGLE_CLIENT_ID=$GOOGLE_CLIENT_ID
-    - GOOGLE_CLIENT_SECRET=$GOOGLE_CLIENT_SECRET
-    - GOOGLE_DOMAINS=$GOOGLE_DOMAINS
-    - PUBLIC_URL=$PUBLIC_URL
-    - TOKEN_SECRET=$TOKEN_SECRET
-
-
-  elasticsearch:
-    image: docker.elastic.co/elasticsearch/elasticsearch:6.4.0
-    ports:
-    - "9200:9200"
-    - "9300:9300"
-    environment:
-    - discovery.type=single-node
-    - "ES_JAVA_OPTS=-Xms512m -Xmx512m"
-    - TAKE_FILE_OWNERSHIP=1
-    volumes:
-    - ./elasticsearch/config/elasticsearch.yml:/usr/share/elasticsearch/config/elasticsearch.yml:ro
-    - ./elasticsearch/data:/usr/share/elasticsearch/data
-  logstash:
-    image: docker.elastic.co/logstash/logstash:6.4.0
-    ports:
-    - "8911:8911"
-    volumes:
-    - ./logstash/pipeline:/usr/share/logstash/pipeline:ro
-    depends_on:
-    - elasticsearch
-  kibana:
-    image: docker.elastic.co/kibana/kibana:6.4.0
-    ports:
-    - "5601:5601"
-    environment:
-    - SERVER_NAME=localhost
-    - XPACK_MONITORING_COLLECTION_ENABLED=true
-    - ELASTICSEARCH_URL=http://$ELASTICSEARCH_HOST:9200
-  oauth2-proxy:
-    build: ./oauth2-proxy
-    depends_on:
-    - kibana
-    ports:
-    - "4180:4180"
-    environment:
-    - OAUTH2_PROXY_CLIENT_ID=$KIBANA_GOOGLE_CLIENT_ID
-    - OAUTH2_PROXY_CLIENT_SECRET=$KIBANA_GOOGLE_CLIENT_SECRET
-    - OAUTH2_PROXY_COOKIE_SECRET=$KIBANA_COOKIE_SECRET
-    - GOOGLE_DOMAINS=$GOOGLE_DOMAINS
-    - KIBANA_HOST=kibana
-
-
   reverse-proxy:
     image: nginx
     ports:
@@ -100,7 +37,6 @@ services:
     depends_on:
     - sotah-client-production
     - sotah-api-production
-    - chronograf
     - oauth2-proxy
 
 
@@ -118,8 +54,6 @@ services:
     environment:
     - GOOGLE_APPLICATION_CREDENTIALS=/tmp/gcloud-app-credentials.json
     - PROJECT_ID=$PROJECT_ID
-    - LOGSTASH_HOST=$LOGSTASH_HOST
-    - LOGSTASH_PORT=$LOGSTASH_PORT
 
   sotah-server-api:
     extends: sotah-server-base
