@@ -37,7 +37,6 @@ services:
     depends_on:
     - sotah-client-production
     - sotah-api-production
-    - oauth2-proxy
 
 
   sotah-server-base:
