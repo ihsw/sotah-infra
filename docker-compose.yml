@@ -142,6 +142,9 @@ services:
     depends_on:
     - nats
     - db
+    environment:
+    - IS_GCE_ENV=1
+    - PROJECT_ID=$PROJECT_ID
 
 
   sotah-client-production:
