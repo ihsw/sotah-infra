@@ -23,6 +23,27 @@ services:
     - "8222:8222"
 
 
+  influxdb:
+    image: influxdb:1.7
+    ports:
+    - "8086:8086"
+    volumes:
+    - ./influxdb:/var/lib/influxdb
+  chronograf:
+    image: chronograf:1.7
+    ports:
+    - "8888:8888"
+    volumes:
+    - ./chronograf:/var/lib/chronograf
+    command: --influxdb-url=http://influxdb:8086
+    environment:
+    - GOOGLE_CLIENT_ID=$GOOGLE_CLIENT_ID
+    - GOOGLE_CLIENT_SECRET=$GOOGLE_CLIENT_SECRET
+    - GOOGLE_DOMAINS=$GOOGLE_DOMAINS
+    - PUBLIC_URL=$PUBLIC_URL
+    - TOKEN_SECRET=$TOKEN_SECRET
+
+
   reverse-proxy:
     image: nginx
     ports:
@@ -37,6 +58,7 @@ services:
     depends_on:
     - sotah-client-production
     - sotah-api-production
+    - chronograf
 
 
   sotah-server-base:
