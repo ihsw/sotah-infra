@@ -83,11 +83,6 @@ services:
     depends_on:
     - nats
     command: -c /tmp/sotah-server/config.json --cache-dir /tmp/sotah-server/data -v debug api
-  sotah-server-api-test:
-    extends: sotah-server-base
-    depends_on:
-    - nats
-    command: -c /tmp/sotah-server/config.json --cache-dir /tmp/sotah-server/data -v debug api-test -d /tmp/sotah-server/test-fixtures
   sotah-server-api-production:
     extends: sotah-server-base-production
     depends_on:
@@ -120,23 +115,11 @@ services:
     volumes:
     - $GOOGLE_APPLICATION_CREDENTIALS:/tmp/gcloud-app-credentials.json
 
-  sotah-server-sync-items-production:
+  sotah-server-pub-production:
     extends: sotah-server-base-production
     volumes:
     - $GOOGLE_APPLICATION_CREDENTIALS:/tmp/gcloud-app-credentials.json
-    command: -c /tmp/sotah-server/config.json --cache-dir /tmp/sotah-server/data -v debug sync-items
-
-  sotah-server-prune-store-production:
-    extends: sotah-server-base-production
-    volumes:
-    - $GOOGLE_APPLICATION_CREDENTIALS:/tmp/gcloud-app-credentials.json
-    command: -c /tmp/sotah-server/config.json --cache-dir /tmp/sotah-server/data -v debug prune-store
-
-  sotah-server-reform-history-production:
-    extends: sotah-server-base-production
-    depends_on:
-    - nats
-    command: -c /tmp/sotah-server/config.json --cache-dir /tmp/sotah-server/data -v debug reform-history
+    command: -c /tmp/sotah-server/config.json --cache-dir /tmp/sotah-server/data -v debug pub
 
 
   sotah-api-base:
