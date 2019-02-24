@@ -109,11 +109,6 @@ services:
     depends_on:
     - nats
     command: -c /tmp/sotah-server/config.json --cache-dir /tmp/sotah-server/data -v debug pricelist-histories
-  sotah-server-pricelist-histories-production:
-    extends: sotah-server-base-production
-    command: -c /tmp/sotah-server/config.json --cache-dir /tmp/sotah-server/data -v debug pricelist-histories
-    volumes:
-    - $GOOGLE_APPLICATION_CREDENTIALS:/tmp/gcloud-app-credentials.json
 
   sotah-server-pub-production:
     extends: sotah-server-base-production
