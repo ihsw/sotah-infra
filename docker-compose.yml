@@ -91,6 +91,14 @@ services:
     volumes:
     - $GOOGLE_APPLICATION_CREDENTIALS:/tmp/gcloud-app-credentials.json
   
+  sotah-server-prod-api:
+    extends: sotah-server-base-production
+    depends_on:
+    - nats
+    command: -c /tmp/sotah-server/config.json --cache-dir /tmp/sotah-server/data -v debug prod-api
+    volumes:
+    - $GOOGLE_APPLICATION_CREDENTIALS:/tmp/gcloud-app-credentials.json
+  
   sotah-server-live-auctions:
     extends: sotah-server-base
     depends_on:
