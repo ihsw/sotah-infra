@@ -70,65 +70,43 @@ services:
     - CLIENT_ID=$CLIENT_ID
     - CLIENT_SECRET=$CLIENT_SECRET
     - NATS_HOST=nats
-  sotah-server-base-production:
-    extends: sotah-server-base
-    image: gcr.io/$PROJECT_ID/server
-    environment:
-    - GOOGLE_APPLICATION_CREDENTIALS=/tmp/gcloud-app-credentials.json
-    - PROJECT_ID=$PROJECT_ID
-
   sotah-server-api:
     extends: sotah-server-base
     depends_on:
     - nats
     command: -c /tmp/sotah-server/config.json --cache-dir /tmp/sotah-server/data -v debug api
-  sotah-server-api-production:
-    extends: sotah-server-base-production
-    depends_on:
-    - nats
-    command: -c /tmp/sotah-server/config.json --cache-dir /tmp/sotah-server/data -v debug api
-    volumes:
-    - $GOOGLE_APPLICATION_CREDENTIALS:/tmp/gcloud-app-credentials.json
-  
-  sotah-server-prod-api:
-    extends: sotah-server-base-production
-    depends_on:
-    - nats
-    command: -c /tmp/sotah-server/config.json --cache-dir /tmp/sotah-server/data -v debug prod-api
-    volumes:
-    - $GOOGLE_APPLICATION_CREDENTIALS:/tmp/gcloud-app-credentials.json
-  sotah-server-prod-metrics:
-    extends: sotah-server-base-production
-    depends_on:
-    - nats
-    command: -c /tmp/sotah-server/config.json --cache-dir /tmp/sotah-server/data -v debug prod-metrics
-    volumes:
-    - $GOOGLE_APPLICATION_CREDENTIALS:/tmp/gcloud-app-credentials.json
-  sotah-server-prod-live-auctions:
-    extends: sotah-server-base-production
-    depends_on:
-    - nats
-    command: -c /tmp/sotah-server/config.json --cache-dir /tmp/sotah-server/data -v debug prod-live-auctions
-    volumes:
-    - $GOOGLE_APPLICATION_CREDENTIALS:/tmp/gcloud-app-credentials.json
-  
   sotah-server-live-auctions:
     extends: sotah-server-base
     depends_on:
     - nats
     command: -c /tmp/sotah-server/config.json --cache-dir /tmp/sotah-server/data -v debug live-auctions
-  
   sotah-server-pricelist-histories:
     extends: sotah-server-base
     depends_on:
     - nats
     command: -c /tmp/sotah-server/config.json --cache-dir /tmp/sotah-server/data -v debug pricelist-histories
 
-  sotah-server-pub-production:
+  sotah-server-base-production:
+    extends: sotah-server-base
+    image: gcr.io/$PROJECT_ID/server
+    environment:
+    - GOOGLE_APPLICATION_CREDENTIALS=/tmp/gcloud-app-credentials.json
+    - PROJECT_ID=$PROJECT_ID
+  sotah-server-prod-api:
     extends: sotah-server-base-production
-    volumes:
-    - $GOOGLE_APPLICATION_CREDENTIALS:/tmp/gcloud-app-credentials.json
-    command: -c /tmp/sotah-server/config.json --cache-dir /tmp/sotah-server/data -v debug pub
+    depends_on:
+    - nats
+    command: -c /tmp/sotah-server/config.json --cache-dir /tmp/sotah-server/data -v debug prod-api
+  sotah-server-prod-metrics:
+    extends: sotah-server-base-production
+    depends_on:
+    - nats
+    command: -c /tmp/sotah-server/config.json --cache-dir /tmp/sotah-server/data -v debug prod-metrics
+  sotah-server-prod-live-auctions:
+    extends: sotah-server-base-production
+    depends_on:
+    - nats
+    command: -c /tmp/sotah-server/config.json --cache-dir /tmp/sotah-server/data -v debug prod-live-auctions
 
 
   sotah-api-base:
