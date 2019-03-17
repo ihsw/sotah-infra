@@ -104,19 +104,19 @@ services:
     command: -c /tmp/sotah-server/config.json --cache-dir /tmp/sotah-server/data -v debug prod-metrics
     volumes:
     - $GOOGLE_APPLICATION_CREDENTIALS:/tmp/gcloud-app-credentials.json
+  sotah-server-prod-live-auctions:
+    extends: sotah-server-base-production
+    depends_on:
+    - nats
+    command: -c /tmp/sotah-server/config.json --cache-dir /tmp/sotah-server/data -v debug prod-live-auctions
+    volumes:
+    - $GOOGLE_APPLICATION_CREDENTIALS:/tmp/gcloud-app-credentials.json
   
   sotah-server-live-auctions:
     extends: sotah-server-base
     depends_on:
     - nats
     command: -c /tmp/sotah-server/config.json --cache-dir /tmp/sotah-server/data -v debug live-auctions
-  sotah-server-live-auctions-production:
-    extends: sotah-server-base-production
-    depends_on:
-    - nats
-    command: -c /tmp/sotah-server/config.json --cache-dir /tmp/sotah-server/data -v debug live-auctions
-    volumes:
-    - $GOOGLE_APPLICATION_CREDENTIALS:/tmp/gcloud-app-credentials.json
   
   sotah-server-pricelist-histories:
     extends: sotah-server-base
