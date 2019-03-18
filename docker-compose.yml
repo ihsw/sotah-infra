@@ -138,3 +138,4 @@ services:
     - IS_GCE_ENV=1
     - PROJECT_ID=$PROJECT_ID
     - DB_HOST=$DB_HOST
+    - DB_PASSWORD=$DB_PASSWORD
