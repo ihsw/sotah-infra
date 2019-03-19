@@ -92,6 +92,8 @@ services:
     environment:
     - GOOGLE_APPLICATION_CREDENTIALS=/tmp/gcloud-app-credentials.json
     - PROJECT_ID=$PROJECT_ID
+    volumes:
+    - $GOOGLE_APPLICATION_CREDENTIALS:/tmp/gcloud-app-credentials.json
   sotah-server-prod-api:
     extends: sotah-server-base-production
     depends_on:
