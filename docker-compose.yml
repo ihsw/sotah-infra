@@ -119,6 +119,11 @@ services:
     - nats
     - influxdb
     command: -c /tmp/sotah-server/config.json --cache-dir /tmp/sotah-server/data -v debug prod-pricelist-histories
+  sotah-server-prod-items:
+    extends: sotah-server-base-production
+    depends_on:
+    - nats
+    command: -c /tmp/sotah-server/config.json --cache-dir /tmp/sotah-server/data -v debug prod-items
 
   sotah-api-base:
     image: ihsw/sotah-api
