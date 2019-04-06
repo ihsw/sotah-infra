@@ -124,6 +124,11 @@ services:
     depends_on:
     - nats
     command: -c /tmp/sotah-server/config.json --cache-dir /tmp/sotah-server/data -v debug prod-items
+  sotah-server-fn-download-all-auctions:
+    extends: sotah-server-base-production
+    depends_on:
+    - nats
+    command: -c /tmp/sotah-server/config.json --cache-dir /tmp/sotah-server/data -v debug fn-download-all-auctions
 
   sotah-api-base:
     image: ihsw/sotah-api
