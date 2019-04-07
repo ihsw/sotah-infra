@@ -131,6 +131,9 @@ services:
   sotah-server-fn-sync-all-items:
     extends: sotah-server-base-production
     command: -c /tmp/sotah-server/config.json --cache-dir /tmp/sotah-server/data -v debug fn-sync-all-items
+  sotah-server-fn-cleanup-all-expired-manifests:
+    extends: sotah-server-base-production
+    command: -c /tmp/sotah-server/config.json --cache-dir /tmp/sotah-server/data -v debug fn-cleanup-all-expired-manifests
 
   sotah-api-base:
     image: ihsw/sotah-api
