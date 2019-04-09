@@ -134,6 +134,9 @@ services:
   sotah-server-fn-cleanup-all-expired-manifests:
     extends: sotah-server-base-production
     command: -c /tmp/sotah-server/config.json --cache-dir /tmp/sotah-server/data -v debug fn-cleanup-all-expired-manifests
+  sotah-server-fn-cleanup-pricelist-histories:
+    extends: sotah-server-base-production
+    command: -c /tmp/sotah-server/config.json --cache-dir /tmp/sotah-server/data -v debug fn-cleanup-pricelist-histories
 
   sotah-api-base:
     image: ihsw/sotah-api
