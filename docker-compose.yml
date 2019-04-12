@@ -95,6 +95,11 @@ services:
     - INFLUX_HOST=$INFLUX_HOST
     volumes:
     - $GOOGLE_APPLICATION_CREDENTIALS:/tmp/gcloud-app-credentials.json
+  sotah-server-base-fn:
+    extends: sotah-server-base
+    environment:
+    - NATS_HOST=$NATS_HOST
+    - NATS_PORT=$NATS_PORT
   sotah-server-prod-api:
     extends: sotah-server-base-production
     depends_on:
@@ -126,16 +131,16 @@ services:
     command: -c /tmp/sotah-server/config.json --cache-dir /tmp/sotah-server/data -v debug prod-items
 
   sotah-server-fn-download-all-auctions:
-    extends: sotah-server-base-production
+    extends: sotah-server-base-fn
     command: -c /tmp/sotah-server/config.json --cache-dir /tmp/sotah-server/data -v debug fn-download-all-auctions
   sotah-server-fn-sync-all-items:
-    extends: sotah-server-base-production
+    extends: sotah-server-base-fn
     command: -c /tmp/sotah-server/config.json --cache-dir /tmp/sotah-server/data -v debug fn-sync-all-items
   sotah-server-fn-cleanup-all-expired-manifests:
-    extends: sotah-server-base-production
+    extends: sotah-server-base-fn
     command: -c /tmp/sotah-server/config.json --cache-dir /tmp/sotah-server/data -v debug fn-cleanup-all-expired-manifests
   sotah-server-fn-cleanup-pricelist-histories:
-    extends: sotah-server-base-production
+    extends: sotah-server-base-fn
     command: -c /tmp/sotah-server/config.json --cache-dir /tmp/sotah-server/data -v debug fn-cleanup-pricelist-histories
 
   sotah-api-base:
