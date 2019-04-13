@@ -96,7 +96,7 @@ services:
     volumes:
     - $GOOGLE_APPLICATION_CREDENTIALS:/tmp/gcloud-app-credentials.json
   sotah-server-base-fn:
-    extends: sotah-server-base
+    extends: sotah-server-base-production
     environment:
     - NATS_HOST=$NATS_HOST
     - NATS_PORT=$NATS_PORT
