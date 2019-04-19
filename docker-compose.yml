@@ -129,6 +129,10 @@ services:
     depends_on:
     - nats
     command: -c /tmp/sotah-server/config.json --cache-dir /tmp/sotah-server/data -v debug prod-items
+  
+  sotah-server-transfer:
+    extends: sotah-server-base-production
+    command: -c /tmp/sotah-server/config.json --cache-dir /tmp/sotah-server/data -v debug transfer
 
   sotah-server-fn-download-all-auctions:
     extends: sotah-server-base-fn
