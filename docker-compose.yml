@@ -90,11 +90,8 @@ services:
     extends: sotah-server-base
     image: gcr.io/$PROJECT_ID/server
     environment:
-    - GOOGLE_APPLICATION_CREDENTIALS=/tmp/gcloud-app-credentials.json
     - PROJECT_ID=$PROJECT_ID
     - INFLUX_HOST=$INFLUX_HOST
-    volumes:
-    - $GOOGLE_APPLICATION_CREDENTIALS:/tmp/gcloud-app-credentials.json
   sotah-server-base-fn:
     extends: sotah-server-base-production
     environment:
