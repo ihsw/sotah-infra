@@ -167,5 +167,3 @@ services:
     - nats
     environment:
     - IS_GCE_ENV=1
-    - DB_HOST=$DB_HOST
-    - DB_PASSWORD=$DB_PASSWORD
