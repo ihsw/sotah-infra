@@ -145,6 +145,9 @@ services:
   sotah-server-fn-cleanup-pricelist-histories:
     extends: sotah-server-base-fn
     command: -c /tmp/sotah-server/config.json --cache-dir /tmp/sotah-server/data -v debug fn-cleanup-pricelist-histories
+  sotah-server-fn-load-hell:
+    extends: sotah-server-base-fn
+    command: -c /tmp/sotah-server/config.json --cache-dir /tmp/sotah-server/data -v debug fn-load-hell
 
   sotah-api-base:
     image: ihsw/sotah-api
