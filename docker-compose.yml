@@ -88,13 +88,11 @@ services:
     environment:
     - PROJECT_ID=$PROJECT_ID
     - INFLUX_HOST=$INFLUX_HOST
-    - SYSLOG_HOST=$SYSLOG_HOST
   sotah-server-base-fn:
     extends: sotah-server-base-production
     environment:
     - NATS_HOST=$NATS_HOST
     - NATS_PORT=$NATS_PORT
-    - SYSLOG_HOST=$SYSLOG_HOST
   sotah-server-prod-api:
     extends: sotah-server-base-production
     depends_on:
