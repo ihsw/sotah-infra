@@ -124,8 +124,6 @@ services:
     command: -c /tmp/sotah-server/config.json --cache-dir /tmp/sotah-server/data -v debug prod-items
   sotah-server-prod-gateway:
     extends: sotah-server-base-production
-    depends_on:
-      - nats
     command: -c /tmp/sotah-server/config.json --cache-dir /tmp/sotah-server/data -v debug prod-gateway
   
   sotah-server-transfer:
