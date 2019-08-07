@@ -130,27 +130,9 @@ services:
     extends: sotah-server-base-production
     command: -c /tmp/sotah-server/config.json --cache-dir /tmp/sotah-server/data -v debug transfer
 
-  sotah-server-fn-download-all-auctions:
-    extends: sotah-server-base-fn
-    command: -c /tmp/sotah-server/config.json --cache-dir /tmp/sotah-server/data -v debug fn-download-all-auctions
-  sotah-server-fn-compute-all-live-auctions:
-    extends: sotah-server-base-fn
-    command: -c /tmp/sotah-server/config.json --cache-dir /tmp/sotah-server/data -v debug fn-compute-all-live-auctions
-  sotah-server-fn-compute-all-pricelist-histories:
-    extends: sotah-server-base-fn
-    command: -c /tmp/sotah-server/config.json --cache-dir /tmp/sotah-server/data -v debug fn-compute-all-pricelist-histories
-  sotah-server-fn-sync-all-items:
-    extends: sotah-server-base-fn
-    command: -c /tmp/sotah-server/config.json --cache-dir /tmp/sotah-server/data -v debug fn-sync-all-items
-  sotah-server-fn-cleanup-all-expired-manifests:
-    extends: sotah-server-base-fn
-    command: -c /tmp/sotah-server/config.json --cache-dir /tmp/sotah-server/data -v debug fn-cleanup-all-expired-manifests
   sotah-server-fn-cleanup-pricelist-histories:
     extends: sotah-server-base-fn
     command: -c /tmp/sotah-server/config.json --cache-dir /tmp/sotah-server/data -v debug fn-cleanup-pricelist-histories
-  sotah-server-fn-load-hell:
-    extends: sotah-server-base-fn
-    command: -c /tmp/sotah-server/config.json --cache-dir /tmp/sotah-server/data -v debug fn-load-hell
 
   sotah-api-base:
     image: ihsw/sotah-api
