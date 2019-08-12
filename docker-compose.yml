@@ -125,14 +125,6 @@ services:
   sotah-server-prod-gateway:
     extends: sotah-server-base-production
     command: -c /tmp/sotah-server/config.json --cache-dir /tmp/sotah-server/data -v debug prod-gateway
-  
-  sotah-server-transfer:
-    extends: sotah-server-base-production
-    command: -c /tmp/sotah-server/config.json --cache-dir /tmp/sotah-server/data -v debug transfer
-
-  sotah-server-fn-cleanup-pricelist-histories:
-    extends: sotah-server-base-fn
-    command: -c /tmp/sotah-server/config.json --cache-dir /tmp/sotah-server/data -v debug fn-cleanup-pricelist-histories
 
   sotah-api-base:
     image: ihsw/sotah-api
