@@ -97,16 +97,16 @@ services:
     - NATS_PORT=$NATS_PORT
   sotah-server-prod-api:
     extends: sotah-server-base-production
-    command: -c /tmp/sotah-server/config.json --cache-dir /tmp/sotah-server/data -v debug prod-api
+    command: --cache-dir /tmp/sotah-server/data -v debug prod-api
   sotah-server-prod-metrics:
     extends: sotah-server-base-production
-    command: -c /tmp/sotah-server/config.json --cache-dir /tmp/sotah-server/data -v debug prod-metrics
+    command: --cache-dir /tmp/sotah-server/data -v debug prod-metrics
   sotah-server-prod-live-auctions:
     extends: sotah-server-base-production
-    command: -c /tmp/sotah-server/config.json --cache-dir /tmp/sotah-server/data -v debug prod-live-auctions
+    command: --cache-dir /tmp/sotah-server/data -v debug prod-live-auctions
   sotah-server-prod-pricelist-histories:
     extends: sotah-server-base-production
-    command: -c /tmp/sotah-server/config.json --cache-dir /tmp/sotah-server/data -v debug prod-pricelist-histories
+    command: --cache-dir /tmp/sotah-server/data -v debug prod-pricelist-histories
   sotah-server-prod-items:
     extends: sotah-server-base-production
     command: --cache-dir /tmp/sotah-server/data -v debug prod-items
