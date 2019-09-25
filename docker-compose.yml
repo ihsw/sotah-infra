@@ -41,7 +41,9 @@ services:
     - GOOGLE_DOMAINS=$GOOGLE_DOMAINS
     - PUBLIC_URL=$PUBLIC_URL
     - TOKEN_SECRET=$TOKEN_SECRET
-    - INFLUXDB_URL=http://influxdb:8086
+    - INFLUX_HOST=$INFLUX_HOST
+    - INFLUX_PORT=$INFLUX_PORT
+    - INFLUXDB_URL=http://$INFLUX_HOST:$INFLUX_PORT
     depends_on:
     - influxdb
 
