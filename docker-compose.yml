@@ -70,17 +70,17 @@ services:
     extends: sotah-server-base
     depends_on:
     - nats
-    command: -c /tmp/sotah-server/config.json --cache-dir /tmp/sotah-server/data -v debug api
+    command: --is-local -c /tmp/sotah-server/config.json --cache-dir /tmp/sotah-server/data -v debug api
   sotah-server-live-auctions:
     extends: sotah-server-base
     depends_on:
     - nats
-    command: -c /tmp/sotah-server/config.json --cache-dir /tmp/sotah-server/data -v debug live-auctions
+    command: --is-local -c /tmp/sotah-server/config.json --cache-dir /tmp/sotah-server/data -v debug live-auctions
   sotah-server-pricelist-histories:
     extends: sotah-server-base
     depends_on:
     - nats
-    command: -c /tmp/sotah-server/config.json --cache-dir /tmp/sotah-server/data -v debug pricelist-histories
+    command: --is-local -c /tmp/sotah-server/config.json --cache-dir /tmp/sotah-server/data -v debug pricelist-histories
 
   sotah-server-base-production:
     extends: sotah-server-base
